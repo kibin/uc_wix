@@ -1,30 +1,25 @@
 import React from 'react'
 import Wix from 'Wix'
+import UI from 'editor-ui-lib'
 
 export default class widget extends React.Component {
   state = {
-    settingsUpdate: {},
+    settings: {},
+    status: 'ready',
   }
 
   componentDidMount() {
-    this.updateCompHeight(600)
+    // this.updateCompHeight(600)
     Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, this.onSettingsUpdate)
-
-    // You can get the style params programmatically, un-comment the following snippet to see how it works:
-    /*Wix.Styles.getStyleParams(function (style) {
-     console.log(style)
-     })*/
-
-    // You can also get the style every time it changes, try this:
-    /*Wix.addEventListener(Wix.Events.STYLE_PARAMS_CHANGE, function (style) {
-     console.log(style)
-     })*/
   }
 
-  onSettingsUpdate = (update) => {
+  onSettingsUpdate = update => {
     this.setState({
-      settingsUpdate: update
-    }, this.updateCompHeight)
+      settings: {
+        ...this.state.settings,
+        [update.key]: update.value,
+      }
+    }) //, this.updateCompHeight)
   }
 
   updateCompHeight = height => {
@@ -32,33 +27,41 @@ export default class widget extends React.Component {
     Wix.setHeight(desiredHeight)
   }
 
-  stringify = input => {
-    try {
-      return JSON.stringify(input, null, 4)
-    } catch (err) {
-      return input
-    }
+  handleUpload = () => {
+    const {publicKey} = this.state.settings
+
+    this.setState({uuid: null})
+
+    uploadcare
+      .openDialog(null, {imagesOnly: true, publicKey})
+      .then(res => {
+        this.setState({status: 'uploading'})
+
+        return res.promise()
+      })
+      .then(({uuid, cdnUrl}) => {
+        const {handleChange} = this.props
+
+        this.setState({status: 'done', uuid})
+      }, reason => {
+        console.log(reason)
+        if (reason) this.setState({status: 'error'})
+      })
   }
 
   render() {
-    const {settingsUpdate} = this.state
+    const {settings, uuid, status} = this.state
+
     return (
       <div>
-        <div className="wix-style-sample">
-          <h3 className="sample-element sample-title">Demo App</h3>
-          <p className="sample-element sample-content">Welcome to the Wix Demo App, let’s play!</p>
-          <form className="form">
-            <input title="email" type="email" className="sample-element sample-input" placeholder="Enter text here" value={this.props.email}/>
-          </form>
-          <button className="sample-element sample-button">Click me</button>
-          <br/>
-          <br/>
-          <hr/>
-          <h3 className="sample-element sample-title">Last settings update</h3>
-          <pre>
-            <code className="json sample-content">{this.stringify(settingsUpdate)}</code>
-          </pre>
-        </div>
+        {settings.publicKey ? (
+          <UI.button label="Choose files" onClick={this.handleUpload} />
+        ) : (
+          <p>Please go to settings and enter public key</p>
+        )}
+        <p>{status}</p>
+        {uuid && <p>Uploaded!</p>}
+        {uuid && <img width="180" height="180" src={`https://ucarecdn.com/${uuid}/-/preview/180x180/`} />}
       </div>
     )
   }
