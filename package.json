@@ -13,17 +13,6 @@
     "type": "git",
     "url": "https://github.com/kibin/uc_wix"
   },
-  "keywords": [
-    "react",
-    "reactjs",
-    "boilerplate",
-    "hot",
-    "reload",
-    "hmr",
-    "live",
-    "edit",
-    "webpack"
-  ],
   "author": "kibin <mr.kibin@gmail.com> (http://github.com/kibin)",
   "license": "MIT",
   "bugs": {
