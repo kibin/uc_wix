@@ -6,8 +6,11 @@
     "start": "node ./server.js",
     "lint": "eslint src",
     "prebuild": "rimraf dist",
-    "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.production.js",
-    "postbuild": "copyfiles index.html dist"
+    "build": "webpack -p --config webpack.config.production.js",
+    "heroku-postbuild": "yarn build"
+  },
+  "engines": {
+    "node": "7.x.x"
   },
   "repository": {
     "type": "git",
@@ -45,6 +48,7 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "webpack-dev-middleware": "^1.10.1",
-    "webpack-hot-middleware": "^2.17.1"
+    "webpack-hot-middleware": "^2.17.1",
+    "webpack-stats-plugin": "^0.1.4"
   }
 }

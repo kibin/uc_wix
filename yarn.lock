@@ -4347,6 +4347,10 @@ webpack-sources@^0.1.4:
     source-list-map "~0.1.7"
     source-map "~0.5.3"
 
+webpack-stats-plugin@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/webpack-stats-plugin/-/webpack-stats-plugin-0.1.4.tgz#400dd3967e12e54a54eb968ba368c0d7af334eb2"
+
 webpack@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-2.2.1.tgz#7bb1d72ae2087dd1a4af526afec15eed17dda475"

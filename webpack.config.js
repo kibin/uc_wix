@@ -20,7 +20,7 @@ module.exports = {
 
     path: path.resolve(__dirname, 'dist'),
 
-    publicPath: '/static/'
+    publicPath: '/'
   },
 
   devtool: 'inline-source-map',

@@ -31,7 +31,7 @@ const plugHTMLParser = app =>
 const plugAssets = app =>
   app.use(
     config.output.publicPath,
-    express.static(path.join('_build'), {maxAge: '365d'})
+    express.static(path.join('dist'), {maxAge: '365d'})
   )
 
 const getAssets = stats => map(route => merge(route, {
@@ -63,7 +63,7 @@ function startServer() {
   plugHTMLParser(app)
 
   if (isProd) {
-    const stats = require('../dist/stats.json')
+    const stats = require('./dist/stats.json')
     plugAssets(app)
     plugRouter(app, stats)
   } else {
