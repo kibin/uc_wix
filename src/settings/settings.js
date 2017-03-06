@@ -4,7 +4,7 @@ import Wix from 'Wix'
 import Main from './modules/main/main'
 import Settings from './modules/settings/settings'
 // import Layout from './modules/layout/layout'
-// import Design from './modules/design/design'
+import Design from './modules/design/design'
 // import Animations from './modules/animations/animations'
 // import Support from './modules/support/support'
 
@@ -19,7 +19,8 @@ export default class settings extends React.Component {
       <UI.appSettings>
         <UI.panelTabs defaultTabIndex={0}>
           <Main tab="Main"/>
-          <Settings tab="Settings" onUpdate={this.settingsUpdate}/>
+          <Settings tab="Settings" onUpdate={this.settingsUpdate} />
+          <Design tab="Design" onUpdate={this.settingsUpdate} />
         </UI.panelTabs>
       </UI.appSettings>
     )
@@ -27,7 +28,6 @@ export default class settings extends React.Component {
 }
 
 // <Layout tab="Layout" onUpdate={this.settingsUpdate}/>
-// <Design tab="Design" onUpdate={this.settingsUpdate}/>
 // <Animations tab="Animations" onUpdate={this.settingsUpdate}/>
 // <Support tab="Support"/>
 // <hr className="divider-short"/>

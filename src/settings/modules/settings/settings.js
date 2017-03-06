@@ -8,7 +8,7 @@ export default class Settings extends React.Component {
         <UI.textInput
           title="Public Key"
           placeholder="Grab your free API key at https://uploadcare.com/"
-          onChange={(newVal)=>this.props.onUpdate('publicKey', newVal)}/>
+          onChange={newVal => this.props.onUpdate('publicKey', newVal)}/>
       </div>
     )
   }

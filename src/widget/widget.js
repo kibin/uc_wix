@@ -1,10 +1,12 @@
 import React from 'react'
 import Wix from 'Wix'
-import UI from 'editor-ui-lib'
+import _ from 'lodash'
 
 export default class widget extends React.Component {
   state = {
-    settings: {},
+    settings: {
+      buttonText: 'Choose files',
+    },
     status: 'ready',
   }
 
@@ -51,11 +53,25 @@ export default class widget extends React.Component {
 
   render() {
     const {settings, uuid, status} = this.state
+    const width = _.get(settings, ['buttonWidth'], 'auto')
+    const height = _.get(settings, ['buttonHeight'], 'auto')
 
     return (
       <div>
         {settings.publicKey ? (
-          <UI.button label="Choose files" onClick={this.handleUpload} />
+          <button
+            className="button"
+            onClick={this.handleUpload}
+            style={{
+              color: _.get(settings, ['buttonFontAndColor', 'color'], null),
+              font: _.get(settings, ['buttonFontAndColor', 'font'], null),
+              background: _.get(settings, ['buttonBackground', 'color'], null),
+              width: `${width}${Number(width) ? 'px' : ''}`,
+              height: `${height}${Number(height) ? 'px' : ''}`,
+            }}
+          >
+            {settings.buttonText}
+          </button>
         ) : (
           <p>Please go to settings and enter public key</p>
         )}
